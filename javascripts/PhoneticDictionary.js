@@ -12,7 +12,7 @@ var PhoneticDictionary = {
     var self = PhoneticDictionary;
 
     var request = new XMLHttpRequest();
-    request.open('GET', '/PhoneticDictionary.txt', false);
+    request.open('GET', 'PhoneticDictionary.txt', false);
     request.send();
     if ( request.status === 200 ) {
       self.importDictionaryData(request.responseText);

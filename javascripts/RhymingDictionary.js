@@ -11,7 +11,7 @@ function RhymingDictionary() {
   this.property('results');
   this.set('results', new Serenade.Collection([]));
 
-  Serenade.view('result', 'span\n  @word\n<wbr/>');
+  Serenade.view('result', 'span\n  @word');
   Serenade.view('results', 'div\n  - collection @results\n    - view "result"');
   var element = Serenade.render('results', this);
   document.body.appendChild(element);

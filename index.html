@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rhyming Dictionary</title>
+  <style>
+    html {
+      margin: 0px; padding: 0px;
+      font-size: 10px;
+    }
+    body {
+      margin: 0px; padding: 10px;
+      font-family: "Helvetica Neue", Helvetica, sans-serif;
+      font-size: 1.2em;
+      line-height: 1.8em;
+      background: rgb(242, 236, 210);
+    }
+    input[type="search"] {
+      width: 100%;
+      color: rgb(142, 136, 110);
+    }
+    ul#results {
+      margin: 0px; padding: 0px;
+      width: 100%;
+      list-style-type: none;
+    }
+    ul#results li { display: inline; margin-right: 5px; }
+    ul#results li:after { content:','; }
+  </style>
+  <script src="javascripts/serenade.0.1.3.min.js"></script>
+  <script src="javascripts/PhoneticDictionary.js"></script>
+  <script src="javascripts/RhymingDictionary.js"></script>
+</head>
+<body>
+<input type="search" results="5" autosave="rhyming-dictionary-searches" placeholder="Lookup a word" name="lookup-word"/>
+</body>
+</html>

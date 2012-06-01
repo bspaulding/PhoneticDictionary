@@ -55,7 +55,7 @@ var PhoneticDictionary = {
     for ( var anotherWord in potentialRhymes ) {
       var score = self.matchScore(word, anotherWord);
 
-      if ( score >= 50 ) {
+      if ( score > 50 ) {
         results.push({
           word: anotherWord,
           score: score,

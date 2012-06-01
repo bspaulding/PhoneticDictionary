@@ -43,6 +43,10 @@ var PhoneticDictionary = {
     var results = [];
     var wordPhoneme = self.phonemes[word.toUpperCase()];
 
+    if ( 'undefined' === typeof wordPhoneme ) {
+      return [];
+    }
+
     var lastWordPhoneme = wordPhoneme.at(-1);
     var potentialRhymes = self.rejectHash(self.phonemes, function(anotherWord, phonemes) {
       return anotherWord === word.toUpperCase() || phonemes.at(-1) !== lastWordPhoneme;

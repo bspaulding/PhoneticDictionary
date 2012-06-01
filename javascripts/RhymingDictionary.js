@@ -25,6 +25,10 @@ function RhymingDictionary() {
   this.searchInput.addEventListener('search', this.handleSearch);
 
   document.body.addEventListener('orientationchange', this.handleOrientationChange);
+  // Fast tapping
+  document.addEventListener('touchstart', function() {}, false);
+  // Disable scrolling on the main window.
+  document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
 
   // Serenade
   Serenade.extend(this, Serenade.Properties);
@@ -39,10 +43,12 @@ function RhymingDictionary() {
   Serenade.view('results', 'article\n  h1 @query\n    small @num_results\n  ul\n    - collection @results\n      - view "result"');
   var element = Serenade.render('results', this);
   document.body.appendChild(element);
+  // Enable scrolling on the article
+  document.querySelector('article').addEventListener('touchmove', function(e) { e.stopImmediatePropagation(); return true; }, false);
 
   PhoneticDictionary.load();
 
-  this.searchInput.value = 'rhyme';
+  this.searchInput.value = 'on';
   this.handleSearch();
 };
 
@@ -58,7 +64,6 @@ RhymingDictionary.prototype.handleSearch = function() {
     results = map(results, function(i) { i.word = i.word.replace(/[^a-z]/ig, ""); return i; });
     results = uniq(results, function(i) { return i.word; });
 
-    console.log(results);
     this.set('num_results', this.pluralize(results.length, 'result', 'results'));
     this.get('results').update(results);
   }

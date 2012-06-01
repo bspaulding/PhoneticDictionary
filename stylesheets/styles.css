@@ -3,16 +3,21 @@ html {
   font-size: 10px;
 }
 body {
-  margin: 0px; padding: 0px;
+  margin: 59px 0px 0px; padding: 0px;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 1.2em;
   line-height: 1.8em;
   background: rgb(242, 236, 210);
+  -webkit-text-size-adjust: none;
+  z-index: 0;
 }
 header {
   margin: 0px; padding: 10px;
   background: -webkit-linear-gradient(top, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 51%), -webkit-linear-gradient(top, rgb(96,68,53) 50%, rgb(46,18,3) 100%);
   -webkit-box-shadow: 0px 0px 5px black;
+  position: fixed;
+  top: 0px; left: 0px; right: 0px;
+  z-index: 1;
 }
 input[type="search"] {
   width: 100%;
@@ -24,7 +29,12 @@ input[type="search"] {
 }
 input[type="search"]::-webkit-search-results-decoration,
 input[type="search"]::-webkit-search-results-button { -webkit-appearance: none; display: none; position: relative; }
-article { margin: 0px; padding: 0px 8%; }
+article {
+  margin: 0px; padding: 0px 8% 8%;
+  position: fixed;
+  top: 59px; left: 0px; right: 0px; bottom: 0px;
+  overflow-y: scroll; -webkit-overflow-scrolling: touch;
+}
 article>h1 {
   color: rgb(96,68,53);
   text-transform: capitalize;

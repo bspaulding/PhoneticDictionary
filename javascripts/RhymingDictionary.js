@@ -55,6 +55,7 @@ function RhymingDictionary() {
 RhymingDictionary.prototype.handleSearch = function() {
   this.searchInput.blur();
   var query = this.searchInput.value;
+  if ( query ) { query = query.trim() }
   this.set('query', query);
   if ( 'undefined' === typeof query || query.length === 0 ) {
     this.get('results').update([]);

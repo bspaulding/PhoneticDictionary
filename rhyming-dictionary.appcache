@@ -1,8 +1,12 @@
 CACHE MANIFEST
-# Version 1.0.10.dev.1
+# Version 1.0.10.dev.2
 
-NETWORK:
-*
+# NETWORK:
+# *
 
 CACHE:
 PhoneticDictionary.txt
+stylesheets/styles.css
+javascripts/serenade.0.1.3.min.js
+javascripts/PhoneticDictionary.js
+javascripts/RhymingDictionary.js

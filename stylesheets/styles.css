@@ -31,9 +31,9 @@ article>h1 {
   font-size: 1.6em;
   line-height: 1.8em;
   margin: 0.9em 0em;
-  text-shadow: 0px -1px 0px white;
+  text-shadow: 0px 1px 0px white;
 }
-article>h1>small { font-size: 0.7em; float: right; text-shadow: none; }
+article>h1>small { font-size: 0.7em; float: right; }
 article>ul {
   list-style-type: none;
   display: block;

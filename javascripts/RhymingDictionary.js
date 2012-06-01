@@ -47,6 +47,7 @@ function RhymingDictionary() {
 };
 
 RhymingDictionary.prototype.handleSearch = function() {
+  this.searchInput.blur();
   var query = this.searchInput.value;
   this.set('query', query);
   if ( 'undefined' === typeof query || query.length === 0 ) {

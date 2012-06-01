@@ -4,4 +4,5 @@ CACHE MANIFEST
 NETWORK:
 *
 
-# CACHE:
+CACHE:
+PhoneticDictionary.txt

@@ -14,12 +14,20 @@ namespace :assets do
 
     task :apple_touch_startup_image do
       render_document_at_sizes('apple-touch-startup-image', [
+        # web-app startup images are 20px shorter to accomodate status bar.
         { width: 320,  height: 460  },
         { width: 640,  height: 920  },
         { width: 768,  height: 1004 },
         { width: 1024, height: 748  },
         { width: 1536, height: 2008 },
         { width: 2048, height: 1496 },
+        # normal splash screen sizes - for PhoneGap:Build
+        { width: 320,  height: 480  },
+        { width: 640,  height: 960  },
+        { width: 768,  height: 1024 },
+        { width: 1024, height: 768  },
+        { width: 1536, height: 2048 },
+        { width: 2048, height: 1536 }
       ])
     end
 

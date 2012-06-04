@@ -14,7 +14,9 @@ var PhoneticDictionary = {
     var request = new XMLHttpRequest();
     request.open('GET', 'PhoneticDictionary.txt', false);
     request.send();
-    if ( request.status === 200 ) {
+
+    // For some reason request.status = 0 when runnning in PhoneGap... :/
+    if ( request.status === 200 || request.status === 0 ) {
       self.importDictionaryData(request.responseText);
       self.loaded = true;
       if ( callback ) { callback(self); }

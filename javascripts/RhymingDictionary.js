@@ -78,4 +78,9 @@ RhymingDictionary.prototype.handleOrientationChange = function(event) {
   // alert('orientationchange')
 }
 
-document.addEventListener('DOMContentLoaded', function() { window.mainRhymingDictionary = new RhymingDictionary(); });
+var appDelegate = function() { window.mainRhymingDictionary = new RhymingDictionary(); };
+if ( window.device ) {
+  document.addEventListener('deviceready', appDelegate);
+} else {
+  document.addEventListener('DOMContentLoaded', appDelegate);
+}

@@ -23,6 +23,7 @@ function RhymingDictionary() {
   bindAll(this);
   this.searchInput = document.querySelector('input[name="lookup-word"]');
   this.searchInput.addEventListener('search', this.handleSearch);
+  this.searchInput.addEventListener('blur', this.handleSearch);
 
   document.body.addEventListener('orientationchange', this.handleOrientationChange);
   // Fast tapping
@@ -56,6 +57,7 @@ RhymingDictionary.prototype.handleSearch = function() {
   this.searchInput.blur();
   var query = this.searchInput.value;
   if ( query ) { query = query.trim() }
+  if ( query === this.get('query') ) { return; }
   this.set('query', query);
   if ( 'undefined' === typeof query || query.length === 0 ) {
     this.get('results').update([]);

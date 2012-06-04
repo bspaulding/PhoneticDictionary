@@ -14,12 +14,12 @@ namespace :assets do
 
     task :apple_touch_startup_image do
       render_document_at_sizes('apple-touch-startup-image', [
-        { width: 320, height: 460   },
-        { width: 640, height: 920   },
-        { width: 768, height: 1004  },
+        { width: 320,  height: 460  },
+        { width: 640,  height: 920  },
+        { width: 768,  height: 1004 },
         { width: 1024, height: 748  },
         { width: 1536, height: 2008 },
-        { width: 2048, height: 1496 }
+        { width: 2048, height: 1496 },
       ])
     end
 

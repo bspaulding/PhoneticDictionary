@@ -20,6 +20,7 @@ var uniq = function(a, fn) {
 }
 
 function RhymingDictionary() {
+  if ( RhymingDictionary.theRhymingDictionary ) { return RhymingDictionary.theRhymingDictionary; } // Singleton
   bindAll(this);
   this.searchInput = document.querySelector('input[name="lookup-word"]');
   this.searchInput.addEventListener('search', this.handleSearch);

@@ -21,16 +21,16 @@ var uniq = function(a, fn) {
 
 function RhymingDictionary() {
   if ( RhymingDictionary.theRhymingDictionary ) { return RhymingDictionary.theRhymingDictionary; } // Singleton
+
   bindAll(this);
+
   this.searchInput = document.querySelector('input[name="lookup-word"]');
   this.searchInput.addEventListener('search', this.handleSearch);
   this.searchInput.addEventListener('blur', this.handleSearch);
 
   document.body.addEventListener('orientationchange', this.handleOrientationChange);
-  // Fast tapping
-  document.addEventListener('touchstart', function() {}, false);
-  // Disable scrolling on the main window.
-  document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
+  document.addEventListener('touchstart', function() {}, false); // Fast tapping
+  document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false); // Disable scrolling on the main window.
 
   // Serenade
   Serenade.extend(this, Serenade.Properties);
@@ -55,6 +55,18 @@ function RhymingDictionary() {
 RhymingDictionary.prototype.phoneticDictionaryLoaded = function() {
   this.set('query', '');
   this.searchInput.setAttribute('placeholder', 'Search for rhymes');
+
+  this.restoreState();
+};
+
+RhymingDictionary.prototype.restoreState = function() {
+  if ( window.localStorage ) {
+    var lastQuery = localStorage.getItem('lastQuery');
+    if ( lastQuery && lastQuery.length > 0 ) {
+      this.searchInput.value = lastQuery;
+      this.handleSearch();
+    }
+  }
 };
 
 RhymingDictionary.prototype.handleSearch = function() {
@@ -62,9 +74,15 @@ RhymingDictionary.prototype.handleSearch = function() {
   var query = this.searchInput.value;
   if ( query ) { query = query.trim() }
   if ( query === this.get('query') ) { return; }
+
   this.set('query', query);
+  if ( window.localStorage ) {
+    localStorage.setItem('lastQuery', query);
+  }
+
   if ( 'undefined' === typeof query || query.length === 0 ) {
     this.get('results').update([]);
+    this.set('num_results', '');
   } else {
     var results = PhoneticDictionary.lookup(query);
     results = results.sort(function(a,b) { return b.score - a.score; });

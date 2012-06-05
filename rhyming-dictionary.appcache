@@ -7,6 +7,7 @@ CACHE MANIFEST
 CACHE:
 PhoneticDictionary.txt
 stylesheets/styles.css
+javascripts/cordova-1.7.0.js
 javascripts/serenade.0.1.3.min.js
 javascripts/PhoneticDictionary.js
 javascripts/RhymingDictionary.js

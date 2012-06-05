@@ -72,6 +72,12 @@ RhymingDictionary.prototype.handleSearch = function() {
     results = uniq(results, function(i) { return i.word; });
 
     this.set('num_results', this.pluralize(results.length, 'result', 'results'));
+
+    // Hack to get webkit to recalculate the width of the small element.
+    var small = document.querySelector('small');
+    small.parentElement.removeChild(small);
+    document.querySelector('h1').appendChild(small);
+
     this.get('results').update(results);
   }
 }

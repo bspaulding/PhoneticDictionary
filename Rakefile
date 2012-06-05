@@ -1,3 +1,5 @@
+task :default => ['assets:compile']
+
 namespace :assets do
   namespace :compile do
     task :all => [:apple_touch_icon, :apple_touch_startup_image]

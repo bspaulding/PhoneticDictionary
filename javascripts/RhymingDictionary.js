@@ -47,10 +47,13 @@ function RhymingDictionary() {
   // Enable scrolling on the article
   document.querySelector('article').addEventListener('touchmove', function(e) { e.stopImmediatePropagation(); return true; }, false);
 
-  PhoneticDictionary.load();
+  this.set('query', 'Loading Dictionary...');
+  PhoneticDictionary.load(this.phoneticDictionaryLoaded);
+};
 
-  this.searchInput.value = 'on';
-  this.handleSearch();
+RhymingDictionary.prototype.phoneticDictionaryLoaded = function() {
+  this.set('query', '');
+  this.searchInput.setAttribute('placeholder', 'Search for rhymes');
 };
 
 RhymingDictionary.prototype.handleSearch = function() {

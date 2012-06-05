@@ -4,23 +4,24 @@
   <style>
     html, body { margin: 0px; padding: 0px; font-size: 10px; }
     body {
-      font-family: "Helvetica Neue";
+      font-family: Times New Roman;
       /* wkhtmltoimage does not support multiple backgrounds yet. :( */
       /* background-image: -webkit-radial-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0)), url('book-cover-texture.png'); */
       background-image: url('apple-touch-icon-bg.png');
-      background-size: 100% 100%;
+      background-image: url('book-cover-texture-2.png');
     }
     h1 {
       position: absolute; top: 0px; bottom: 0px;
       margin: auto; padding: 0px;
-      height: 1.4em; width: 100%;
+      height: 1.2em; width: 100%;
 
       font-size: 18.0em;
       font-weight: normal;
 
       text-align: center;
       color: #f2ecd2;
-      text-shadow: -1px -1px 0px black;
+      text-shadow: -1px -1px 2px black;
+      text-transform: capitalize;
     }
 
     @media all and (max-width: 512px) { h1 { font-size: 39.5228068em; } }

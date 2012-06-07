@@ -19,6 +19,8 @@ header {
   top: 0px; left: 0px; right: 0px;
   z-index: 1;
 }
+header>form { position: relative; }
+header>form>img { position: absolute; top: 5px; right: 7px; }
 input[type="search"] {
   width: 100%;
   color: rgb(142, 136, 110);
@@ -29,6 +31,7 @@ input[type="search"] {
 }
 input[type="search"]::-webkit-search-results-decoration,
 input[type="search"]::-webkit-search-results-button { -webkit-appearance: none; display: none; position: relative; }
+
 article {
   margin: 0px; padding: 0px 8% 8%;
   position: fixed;

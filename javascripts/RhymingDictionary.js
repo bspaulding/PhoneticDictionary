@@ -24,9 +24,19 @@ function RhymingDictionary() {
 
   bindAll(this);
 
+  document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    return false;
+  });
+
   this.searchInput = document.querySelector('input[name="lookup-word"]');
-  this.searchInput.addEventListener('search', this.handleSearch);
+  this.searchInput.addEventListener('search', this.handleSearch, false);
   this.searchInput.addEventListener('blur', this.handleSearch);
+  this.searchInput.addEventListener('keyup', this.updateClearButtonVisibility, false);
+  this.searchInput.addEventListener('change', this.updateClearButtonVisibility, false);
+
+  this.clearButton = document.querySelector('header>form>img');
+  this.clearButton.addEventListener('mousedown', this.handleSearchClear, true);
 
   document.body.addEventListener('orientationchange', this.handleOrientationChange);
   document.addEventListener('touchstart', function() {}, false); // Fast tapping
@@ -64,6 +74,7 @@ RhymingDictionary.prototype.restoreState = function() {
     var lastQuery = localStorage.getItem('lastQuery');
     if ( lastQuery && lastQuery.length > 0 ) {
       this.searchInput.value = lastQuery;
+      this.updateClearButtonVisibility();
       this.handleSearch();
     }
   }
@@ -98,6 +109,32 @@ RhymingDictionary.prototype.handleSearch = function() {
 
     this.get('results').update(results);
   }
+}
+
+RhymingDictionary.prototype.handleSearchClear = function(event) {
+  event.preventDefault();
+
+  this.searchInput.value = '';
+  this.searchInput.focus();
+  this.hideClearButton();
+
+  return false;
+}
+
+RhymingDictionary.prototype.updateClearButtonVisibility = function() {
+  if ( this.searchInput.value.length > 0 ) {
+    this.showClearButton();
+  } else {
+    this.hideClearButton();
+  }
+}
+
+RhymingDictionary.prototype.showClearButton = function() {
+  this.clearButton.removeAttribute('style');
+}
+
+RhymingDictionary.prototype.hideClearButton = function() {
+  this.clearButton.setAttribute('style', 'display:none;');
 }
 
 RhymingDictionary.prototype.pluralize = function(number, singular, plural) {

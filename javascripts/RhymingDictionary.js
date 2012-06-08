@@ -24,6 +24,14 @@ function RhymingDictionary() {
 
   bindAll(this);
 
+  if ( window.applicationCache ) {
+    applicationCache.addEventListener('updateready', function() {
+      if ( confirm("An update is available. Reload now?") ) {
+        window.location.reload();
+      }
+    });
+  }
+
   document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
     return false;

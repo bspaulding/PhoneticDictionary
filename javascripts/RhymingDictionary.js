@@ -44,8 +44,10 @@ function RhymingDictionary() {
   this.searchInput.addEventListener('change', this.updateClearButtonVisibility, false);
 
   this.clearButton = document.querySelector('header>form>img');
-  this.clearButton.addEventListener('mousedown', this.handleSearchClear, true);
-
+  this.clearButton.addEventListener('touchstart', this.handleSearchClear, false);
+  this.clearButton.addEventListener('mousedown', this.handleSearchClear, false);
+  this.clearButton.addEventListener('click', function(e) { e.preventDefault(); return false; }, false);
+  
   document.body.addEventListener('orientationchange', this.handleOrientationChange);
   document.addEventListener('touchstart', function() {}, false); // Fast tapping
   document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false); // Disable scrolling on the main window.

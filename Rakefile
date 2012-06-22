@@ -39,3 +39,31 @@ namespace :assets do
   end
   task :compile => ['compile:all']
 end
+
+desc "Calculate missing words."
+task :stats do
+  words = File.read("words").split("\n").map(&:downcase).uniq
+  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
+  phonetic_words = phonetic_entries.map {|line| line.split(" ").first.gsub(/[^a-z]/i, '').downcase }.uniq
+
+  puts "Total Words: #{words.count}"
+  puts "Defined Words: #{phonetic_words.count} (#{(phonetic_words.count / words.count.to_f * 100.0).to_i}%)"
+  puts "Undefined Words: #{words.count - phonetic_words.count}"
+end
+
+desc "Show undefined words."
+task :undefined_words do
+  words = File.read("words").split("\n").map(&:downcase).uniq
+  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
+  phonetic_words = phonetic_entries.map {|line| line.split(" ").first.gsub(/[^a-z]/i, '').downcase }.uniq
+
+  puts words - phonetic_words
+end
+
+desc "Show phonemes."
+task :phonemes do
+  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
+  phonemes = phonetic_entries.map {|entry| entry.split(" ")[1..-1] }.flatten.uniq
+
+  puts phonemes.sort
+end

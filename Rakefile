@@ -40,30 +40,76 @@ namespace :assets do
   task :compile => ['compile:all']
 end
 
+def defined_words
+  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
+  phonetic_entries.map {|line| line.split(" ").first.gsub(/[^a-z]/i, '').downcase }.uniq
+end
+
+desc "Show defined words."
+task :defined_words do
+  puts defined_words
+end
+
 desc "Calculate missing words."
 task :stats do
   words = File.read("words").split("\n").map(&:downcase).uniq
-  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
-  phonetic_words = phonetic_entries.map {|line| line.split(" ").first.gsub(/[^a-z]/i, '').downcase }.uniq
+  phonetic_words = defined_words
 
   puts "Total Words: #{words.count}"
   puts "Defined Words: #{phonetic_words.count} (#{(phonetic_words.count / words.count.to_f * 100.0).to_i}%)"
   puts "Undefined Words: #{words.count - phonetic_words.count}"
 end
 
+def undefined_words
+  words = File.read("words").split("\n").map(&:downcase).uniq
+
+  words - defined_words.map(&:downcase).uniq
+end
+
 desc "Show undefined words."
 task :undefined_words do
-  words = File.read("words").split("\n").map(&:downcase).uniq
-  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
-  phonetic_words = phonetic_entries.map {|line| line.split(" ").first.gsub(/[^a-z]/i, '').downcase }.uniq
+  puts undefined_words.map {|c| "\"#{c}\""}
+end
 
-  puts words - phonetic_words
+desc "Show first undefined word sorted alphabetically."
+task :next_undefined_word do
+  puts undefined_words.first
+end
+
+def phonemes
+  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
+  the_phonemes = phonetic_entries.map {|entry| entry.split(" ")[1..-1] }.flatten.uniq
+
+  the_phonemes.sort
 end
 
 desc "Show phonemes."
 task :phonemes do
-  phonetic_entries = File.read("PhoneticDictionary.txt").split("\n")
-  phonemes = phonetic_entries.map {|entry| entry.split(" ")[1..-1] }.flatten.uniq
+  puts phonemes
+end
 
-  puts phonemes.sort
+desc "Define an undefined word."
+task :define_word, :word, :phonemes do |task, args|
+  puts args
+  word = args[:word]
+  phonemes = args[:phonemes]
+  if defined_words.include?(word)
+    puts "'#{word}' is already defined."
+    exit(1)
+  end
+
+  if phonemes.nil? || phonemes.length == 0
+    puts "Please provide phonemes."
+    exit(1)
+  end
+
+  entries = File.read("PhoneticDictionary.txt").split("\n")
+  entries << "#{word.upcase}  #{phonemes}"
+  entries.sort!
+  File.open("PhoneticDictionary.txt", 'w+') do |f|
+    f.write entries.join("\n")
+  end
+
+  puts "word: '#{args[:word]}'"
+  puts "phonemes: '#{args[:phonemes]}'"
 end

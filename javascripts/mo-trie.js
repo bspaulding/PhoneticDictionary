@@ -19,24 +19,29 @@ var MOTrie = (function() {
   };
 
   MOTrie.prototype.find = function(string) {
-    return this.wordsForNode(this.findNode(string), string);
+    var lowerString = String(string).toLowerCase();
+    return this.childrenForNode(this.findNode(lowerString), lowerString);
   };
 
-  MOTrie.prototype.wordsForNode = function(node, prefix) {
-    var words = [];
+  MOTrie.prototype.childrenForNode = function(node, prefix) {
+    var children = [];
+
+    if ( 'undefined' === typeof node || node === null ) {
+      return children;
+    }
 
     if ( node.end ) {
-      words.push(prefix);
+      children.push(prefix);
     }
 
     for ( var key in node ) {
       if ( !node.hasOwnProperty(key) ) { continue; }
 
-      var childWords = this.wordsForNode(node[key], prefix + key);
-      words = words.concat(childWords);
+      var childWords = this.childrenForNode(node[key], prefix + key);
+      children = children.concat(childWords);
     }
 
-    return words;
+    return children;
   }
 
   MOTrie.prototype.findNode = function(string) {

@@ -90,6 +90,26 @@ var PhoneticDictionary = {
     return ((score / wordPhoneme.length) * 100.00);
   },
 
+  wordsContainingPhoneme: function(phoneme) {
+    var self = PhoneticDictionary;
+
+    if ( 'undefined' === typeof self._wordsContainingPhoneme ) { self._wordsContainingPhoneme = {}; }
+
+    if ( 'undefined' !== typeof self._wordsContainingPhoneme[phoneme] ) {
+      return self._wordsContainingPhoneme[phoneme];
+    }
+
+    var words = [];
+    for ( var word in self.phonemes ) {
+      if ( self.phonemes[word].indexOf(phoneme) >= 0 ) {
+        words.push(word);
+      }
+    }
+
+    self._wordsContainingPhoneme[phoneme] = words;
+    return words;
+  },
+
   // Utility Functions
   rejectHash: function(hash, aFunction) {
     var results = {};
@@ -118,7 +138,29 @@ var PhoneticDictionary = {
     return words;
   },
 
-  phonemes: {}
+  phonemes: {},
+
+  phonemeList: function() {
+    var self = PhoneticDictionary;
+    if ( 'undefined' !== typeof self._phonemeList ) {
+      return self._phonemeList;
+    }
+
+    var phonemeList = [];
+    for ( var key in self.phonemes ) {
+      var wordPhonemes = self.phonemes[key];
+      for ( var i = 0; i < wordPhonemes.length; i += 1 ) {
+        var wordPhoneme = wordPhonemes[i];
+        if ( phonemeList.indexOf(wordPhoneme) < 0 ) {
+          phonemeList.push(wordPhoneme);
+        }
+      }
+    }
+    phonemeList = phonemeList.sort();
+
+    self._phonemeList = phonemeList;
+    return phonemeList;
+  }
 }
 
 if ( window.exports ) { exports.PhoneticDictionary = PhoneticDictionary; }

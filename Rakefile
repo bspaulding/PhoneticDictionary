@@ -26,6 +26,7 @@ namespace :assets do
         # normal splash screen sizes - for PhoneGap:Build
         { width: 320,  height: 480  },
         { width: 640,  height: 960  },
+        { width: 640,  height: 1136 },
         { width: 768,  height: 1024 },
         { width: 1024, height: 768  },
         { width: 1536, height: 2048 },

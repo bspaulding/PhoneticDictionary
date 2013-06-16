@@ -1,5 +1,31 @@
 task :default => ['assets:compile']
 
+task :build do
+  puts "Building..."
+  out = %x[cordova/cordova/build]
+  if $? == 0
+    puts "Done. Build was successful."
+  else
+    puts out
+  end
+end
+
+task :run => ['run:device']
+
+namespace :run do
+  task :simulator do
+    system 'cordova/cordova/emulate --target emulator'
+  end
+
+  task :device do
+    system 'cordova/cordova/run --target device'
+  end
+end
+
+task :clean do
+  system 'cordova/cordova/clean'
+end
+
 namespace :assets do
   namespace :compile do
     task :all => [:apple_touch_icon, :apple_touch_startup_image]

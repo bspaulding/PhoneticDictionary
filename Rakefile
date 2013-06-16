@@ -26,17 +26,22 @@ task :clean do
   system 'cordova/cordova/clean'
 end
 
+task :release do
+  system 'cordova/cordova/release'
+end
+
 namespace :assets do
   namespace :compile do
     task :all => [:apple_touch_icon, :apple_touch_startup_image]
 
     task :apple_touch_icon do
       render_document_at_sizes('apple-touch-icon', [
-        { width: 57,  height: 57  },
-        { width: 72,  height: 72  },
-        { width: 114, height: 114 },
-        { width: 144, height: 144 },
-        { width: 512, height: 512 }
+        { width: 57,   height: 57  },
+        { width: 72,   height: 72  },
+        { width: 114,  height: 114 },
+        { width: 144,  height: 144 },
+        { width: 512,  height: 512 },
+        { width: 1024, height: 1024 }
       ])
     end
 

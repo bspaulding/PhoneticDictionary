@@ -67,6 +67,7 @@ Don't worry, Phonetic Matching allows the entire dictionary to be stored in a ri
   <!-- Startup Screens -->
   <gap:splash width="320"  height="480"  src="images/apple-touch-startup-image-320x480.png"   />
   <gap:splash width="640"  height="960"  src="images/apple-touch-startup-image-640x960.png"   />
+  <gap:splash width="640"  height="1136" src="images/apple-touch-startup-image-640x1136.png"  />
   <gap:splash width="768"  height="1024" src="images/apple-touch-startup-image-768x1024.png"  />
   <gap:splash width="1024" height="768"  src="images/apple-touch-startup-image-1024x768.png"  />
   <gap:splash width="1536" height="2048" src="images/apple-touch-startup-image-1536x2048.png" />

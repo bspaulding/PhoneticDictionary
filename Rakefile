@@ -1,33 +1,18 @@
 task :default => ['assets:compile']
 
-task :build do
-  puts "Building..."
-  out = %x[cordova/cordova/build]
-  if $? == 0
-    puts "Done. Build was successful."
-  else
-    puts out
-  end
-end
-
-task :run => ['run:device']
-
-namespace :run do
-  task :simulator do
-    system 'cordova/cordova/emulate --target emulator'
-  end
-
-  task :device do
-    system 'cordova/cordova/run --target device'
-  end
-end
-
 task :clean do
-  system 'cordova/cordova/clean'
+  `rm -rf build`
+  `rm build.zip`
 end
 
-task :release do
-  system 'cordova/cordova/release'
+task :build do
+  `mkdir -p build`
+  [
+    'config.xml', 'index.html', 'PhoneticDictionary.txt', 'images', 'stylesheets', 'javascripts'
+  ].each do |filePattern|
+    `cp -r #{filePattern} build/#{filePattern}`
+  end
+  `zip -r build.zip build/*`
 end
 
 namespace :assets do

@@ -3,3 +3,4 @@ build.zip
 archives
 \#*
 vendor
+/node_modules

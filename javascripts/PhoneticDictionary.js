@@ -40,49 +40,95 @@ var PhoneticDictionary = {
 
   lookup: function(word) {
     var self = PhoneticDictionary;
-    var results = [];
-    var wordPhoneme = self.phonemes[word.toUpperCase()];
+    return self.perfectRhymes(word);
+  },
 
-    if ( 'undefined' === typeof wordPhoneme ) {
-      return [];
+  // Perfect Rhyme Rules:
+  //   1. The vowel sound in both words must be identical. — e.g. "sky" and high"
+  //   2. The articulation that precedes the vowel sound must differ.
+  //      i.e: "leave" and "believe" is an imperfect rhyme,
+  //      whereas "green" and "spleen" are perfect rhymes.
+  perfectRhymes: function(targetWord) {
+    var self = PhoneticDictionary;
+    var targetWordUpcase = targetWord.toUpperCase();
+    var wordPhonemes = self.phonemes[targetWordUpcase];
+
+    if ( 'undefined' === typeof wordPhonemes ) {
+      return results;
     }
 
-    var lastWordPhoneme = wordPhoneme.at(-1);
-    var potentialRhymes = self.rejectHash(self.phonemes, function(anotherWord, phonemes) {
-      return anotherWord === word.toUpperCase() || phonemes.at(-1) !== lastWordPhoneme;
+    targetRhymeInfo = self.rhymeInfo(targetWord, wordPhonemes);
+    var matches = self.selectHash(self.phonemes, function(word, phonemes) {
+      if ( word === targetWordUpcase ) { return false; }
+
+      var wordRhymeInfo = self.rhymeInfo(word, phonemes);
+      return targetRhymeInfo.stressedVowel === wordRhymeInfo.stressedVowel
+          && arrayEqual(targetRhymeInfo.phonemesAfterStressedVowel, wordRhymeInfo.phonemesAfterStressedVowel)
+          && targetRhymeInfo.phonemeBeforeStressedVowel !== wordRhymeInfo.phonemeBeforeStressedVowel;
     });
 
-    for ( var anotherWord in potentialRhymes ) {
-      var score = self.matchScore(word, anotherWord);
+    return mapHash(matches, function(key, value) {
+      return { word: key, phonemes: value };
+    });
+  },
 
-      if ( score > 50 ) {
-        results.push({
-          word: anotherWord,
-          score: score,
-          phoneme: self.phonemes[anotherWord]
-        });
+  rhymeInfo: function(word, phonemes) {
+    var self = PhoneticDictionary;
+    var stressedVowel = phonemes[self.indexOfStress(phonemes)];
+    return {
+      stressedVowel: stressedVowel,
+      phonemesAfterStressedVowel: self.findPhonemesAfterLastMatch(phonemes, stressedVowel),
+      phonemeBeforeStressedVowel: self.findPhonemesBeforeLastMatch(phonemes, stressedVowel).at(-1)
+    }
+  },
+
+  mapVowels: function(phonemes) {
+    var self = PhoneticDictionary;
+    return map(phonemes, self.isVowel);
+  },
+
+  indexOfStress: function(phonemes) {
+    var self = PhoneticDictionary;
+    for ( var i = phonemes.length - 1; i >= 0; i -= 1 ) {
+      if ( self.isVowel(phonemes[i]) ) {
+        return i;
+      }
+    }
+  },
+
+  findFirstVowelInPhonemes: function(wordPhonemes) {
+    var self = PhoneticDictionary;
+    return find(wordPhonemes, self.isVowel);
+  },
+
+  findLastVowelInPhonemes: function(wordPhonemes) {
+    var self = PhoneticDictionary;
+    return reverseFind(wordPhonemes, self.isVowel);
+  },
+
+  findPhonemesBeforeLastMatch: function(wordPhonemes, phoneme) {
+    var lastIndex = wordPhonemes.lastIndexOf(phoneme);
+    return wordPhonemes.slice(0, lastIndex);
+  },
+
+  findPhonemesAfterLastMatch: function(wordPhonemes, phoneme) {
+    var lastIndex = wordPhonemes.lastIndexOf(phoneme);
+    return wordPhonemes.slice(lastIndex + 1);
+  },
+
+  // Utility Functions
+  selectHash: function(hash, aFunction) {
+    var results = {};
+
+    for ( var key in hash ) {
+      if ( aFunction(key, hash[key]) ) {
+        results[key] = hash[key];
       }
     }
 
     return results;
   },
 
-  matchScore: function(word, anotherWord) {
-    var self = PhoneticDictionary;
-    var wordPhoneme = self.phonemes[word.toUpperCase()];
-    var anotherPhoneme = self.phonemes[anotherWord.toUpperCase()];
-    var score = 1.0;
-    var endIndex = Math.min(wordPhoneme.length, anotherPhoneme.length) * -1;
-    for ( var i = -2; i >= endIndex; i -= 1 ) {
-      if ( wordPhoneme.at(i) === anotherPhoneme.at(i) ) {
-        score += 1.0;
-      } else { break; }
-    }
-
-    return ((score / wordPhoneme.length) * 100.00);
-  },
-
-  // Utility Functions
   rejectHash: function(hash, aFunction) {
     var results = {};
 
@@ -110,6 +156,16 @@ var PhoneticDictionary = {
     return words;
   },
 
+  isVowel: function(string) {
+    return PhoneticDictionary.vowels.indexOf(string) > -1;
+  },
+
+  isConsonant: function(string) {
+    return PhoneticDictionary.consonants.indexOf(string) > -1;
+  },
+
+  consonants: ['B', 'CH', 'D', 'DH', 'F', 'G', 'HH', 'JH', 'K', 'L', 'M', 'N', 'NG', 'P', 'R', 'S', 'SH', 'T', 'TH', 'V', 'W', 'Y', 'Z', 'ZH'],
+  vowels: ['AA0', 'AA1', 'AA2', 'AE0', 'AE1', 'AE2', 'AH0', 'AH1', 'AH2', 'AO0', 'AO1', 'AO2', 'AW0', 'AW1', 'AW2', 'AY0', 'AY1', 'AY2', 'EH0', 'EH1', 'EH2', 'ER0', 'ER1', 'ER2', 'EY0', 'EY1', 'EY2', 'IH0', 'IH1', 'IH2', 'IY0', 'IY1', 'IY2', 'OW0', 'OW1', 'OW2', 'OY0', 'OY1', 'OY2', 'UH0', 'UH1', 'UH2', 'UW0', 'UW1', 'UW2'],
   phonemes: {}
 }
 

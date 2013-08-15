@@ -1,11 +1,3 @@
-Array.prototype.at = function(i) {
-  if ( i < 0 ) {
-    i = this.length - i * -1;
-  }
-
-  return this[i];
-}
-
 var PhoneticDictionary = {
   loaded: false, // Marked as true once the dictionary data has been loaded.
   load: function(callback) {

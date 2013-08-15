@@ -48,7 +48,7 @@ Don't worry, Phonetic Matching allows the entire dictionary to be stored in a ri
       Bradley J. Spaulding
   </author>
 
-  <preference name="phonegap-version" value="2.7.0"     />
+  <preference name="phonegap-version" value="2.9.0"     />
   <preference name="orientation"      value="both"      />
   <preference name="target-device"    value="universal" />
   <preference name="fullscreen"       value="false"     />

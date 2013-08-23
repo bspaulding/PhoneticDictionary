@@ -15,6 +15,20 @@ task :build do
   `zip -r build.zip build/*`
 end
 
+task :update_spec_dictionary do
+  dictionary = {}
+  entries = File.read('PhoneticDictionary.txt').split("\n")
+  entries.each do |entry|
+    tokens = entry.split(' ')
+    dictionary[tokens.first] = tokens[1..-1]
+  end
+  require 'json'
+  File.open('spec/phonetic-dictionary.json', 'w+') do |f|
+    f.write "PhoneticDictionary.phonemes = "
+    f.write JSON.dump(dictionary)
+  end
+end
+
 namespace :assets do
   namespace :compile do
     task :all => [:apple_touch_icon, :apple_touch_startup_image]

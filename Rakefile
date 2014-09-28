@@ -58,6 +58,7 @@ namespace :assets do
         { width: 640,  height: 960  },
         { width: 640,  height: 1136 },
         { width: 768,  height: 1024 },
+        { width: 1024, height: 500 },
         { width: 1024, height: 768  },
         { width: 1536, height: 2048 },
         { width: 2048, height: 1536 }

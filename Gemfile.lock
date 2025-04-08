@@ -1,18 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    domain_name (0.6.20240107)
     heroku (3.99.4)
-    http-cookie (1.0.8)
-      domain_name (~> 0.5)
-    mime-types (2.99.3)
-    netrc (0.7.2)
-    rack (2.2.11)
+    rack (2.2.13)
     rake (12.3.3)
-    rest-client (1.8.0)
-      http-cookie (>= 1.0.2, < 2.0)
-      mime-types (>= 1.16, < 3.0)
-      netrc (~> 0.7)
 
 PLATFORMS
   ruby

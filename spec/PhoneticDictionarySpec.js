@@ -42,7 +42,7 @@ describe("PhoneticDictionary", function() {
           var aResults  = mapByWord(PhoneticDictionary.perfectRhymes(a));
           var bResults  = mapByWord(PhoneticDictionary.perfectRhymes(b));
 
-          expect(aResults.length).toNotEqual(0);
+          expect(aResults.length).not.toEqual(0);
           expect(aResults).toContain(b.toUpperCase());
           expect(bResults).toContain(a.toUpperCase());
         }
@@ -71,14 +71,14 @@ describe("PhoneticDictionary", function() {
     it("should not return results that match the last vowel, but not the phonemes after it", function() {
       var results = mapByKey('word')(PhoneticDictionary.perfectRhymes("file"));
 
-      expect(results.length).toNotEqual(0);
+      expect(results.length).not.toEqual(0);
       expect(results).not.toContain("BINES");
     });
 
     it("should not return imperfect rhymes", function() {
       var results = mapByKey('word')(PhoneticDictionary.perfectRhymes("leave"));
 
-      expect(results.length).toNotEqual(0);
+      expect(results.length).not.toEqual(0);
       expect(results).not.toContain("BELIEVE");
     });
   });
